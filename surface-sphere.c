@@ -1,8 +1,10 @@
 /**
  * \file surface-sphere.c
  * \author Angelo L. Scandaliato
- * \brief Outputs the surface of a sphere in PLOT3D format.
- * There are multiple parameterizations to choose from.
+ * \brief Outputs the surface of a sphere in PLOT3D format (file extension .xyz).
+ * The sphere is centered about the origin (0, 0, 0).
+ * There are multiple parameterizations to choose from. Some with overlapping
+ * mesh parts to be used with other overset grid methods.
  *
  * - RECTANGULAR
  * - SPHERICAL
@@ -46,25 +48,26 @@
 
 #define PI   (3.1415926535897932384626433832795028841971693993751)
 
+// Parameterization Options
 #define RECTANGULAR        (0)
 #define SPHERICAL          (1)
 #define BOX_PROJECTION     (2)
 #define YIN_YANG           (3)
 #define TWO_CAPS           (4)
 
-
+/*
+ * The PLOT3D format (file extension .xyz) is described by its read method:
+ * READ(1) NGRID
+ * READ(1) (JD(IG),KD(IG),LD(IG),IG=1,NGRID)
+ * DO IG = 1,NGRID
+ *   READ(1) (((X(J,K,L),J=1,JD(IG)),K=1,KD(IG)),L=1,LD(IG)),
+ *   &       (((Y(J,K,L),J=1,JD(IG)),K=1,KD(IG)),L=1,LD(IG)),
+ *   &       (((Z(J,K,L),J=1,JD(IG)),K=1,KD(IG)),L=1,LD(IG)),
+ *   &       (((IBLANK(J,K,L),J=1,JD(IG)),K=1,KD(IG)),L=1,LD(IG))
+ * ENDDO
+ */
 int main(int argc, char **argv)
 {
-//  READ(1) NGRID
-//  READ(1) (JD(IG),KD(IG),LD(IG),IG=1,NGRID)
-//  DO IG = 1,NGRID
-//             READ(1) (((X(J,K,L),J=1,JD(IG)),K=1,KD(IG)),L=1,LD(IG)),
-//&                    (((Y(J,K,L),J=1,JD(IG)),K=1,KD(IG)),L=1,LD(IG)),
-//&                    (((Z(J,K,L),J=1,JD(IG)),K=1,KD(IG)),L=1,LD(IG)),
-//&                    (((IBLANK(J,K,L),J=1,JD(IG)),K=1,KD(IG)),L=1,LD(IG))
-//  ENDDO
-
-
   //------------------------+-------------------------------------------------------------
   // Open File to write     |
   //------------------------+
@@ -231,7 +234,7 @@ int main(int argc, char **argv)
 
   //-------------------------------------------
   // FOR THE CAPS
-  double cap_overlap = 2.0e0 * d_theta2;      // (1.0e0/15.0e0)*PI;
+  double cap_overlap = 2.0e0 * d_theta2;      // (1.0e0 / 15.0e0) * PI;
 
   // Angle in the xy-plane
   double theta1_cap_lb = -theta2_lb - cap_overlap;
@@ -283,14 +286,13 @@ int main(int argc, char **argv)
     fprintf(outfile, "%i %i %i\n", Jmax_cap, Kmax_cap, Lmax);
     fprintf(outfile, "%i %i %i\n", Jmax_cap, Kmax_cap, Lmax);
   } else {
-    for (G = 0 ; G < Gmax ; G++) {
+    for (G = 0; G < Gmax; G++) {
       fprintf(outfile, "%i %i %i\n", Jmax, Kmax, Lmax);
     }
   }
 
 
   for (G = 0; G < Gmax; G++) {
-
     //---------------------------------------+-------------------------
     // Choose Index Ranges for each grid.    |
     //---------------------------------------+
@@ -343,13 +345,13 @@ int main(int argc, char **argv)
 
 
     // All x-coordinates
-    for (L = 0 ; L < Lmax ; L++) {
-    for (K = 0 ; K < Kmax ; K++) {
-    for (J = 0 ; J < Jmax ; J++) {
+    for (L = 0; L < Lmax; L++) {
+    for (K = 0; K < Kmax; K++) {
+    for (J = 0; J < Jmax; J++) {
 
-    //for (J = 0 ; J < Jmax ; J++) {
-    //for (K = 0 ; K < Kmax ; K++) {
-    //for (L = 0 ; L < Lmax ; L++) {
+    //for (J = 0; J < Jmax; J++) {
+    //for (K = 0; K < Kmax; K++) {
+    //for (L = 0; L < Lmax; L++) {
 
       if (Coordinates == RECTANGULAR) {
         x = x_lb + (double)J * dx;
@@ -462,13 +464,13 @@ int main(int argc, char **argv)
 
 
     // All y-coordinates
-    for (L = 0 ; L < Lmax ; L++) {
-    for (K = 0 ; K < Kmax ; K++) {
-    for (J = 0 ; J < Jmax ; J++) {
+    for (L = 0; L < Lmax; L++) {
+    for (K = 0; K < Kmax; K++) {
+    for (J = 0; J < Jmax; J++) {
 
-    //for (J = 0 ; J < Jmax ; J++) {
-    //for (K = 0 ; K < Kmax ; K++) {
-    //for (L = 0 ; L < Lmax ; L++) {
+    //for (J = 0; J < Jmax; J++) {
+    //for (K = 0; K < Kmax; K++) {
+    //for (L = 0; L < Lmax; L++) {
 
       if (Coordinates == RECTANGULAR) {
         x = x_lb + (double)J * dx;
@@ -589,13 +591,13 @@ int main(int argc, char **argv)
 
 
     // All z-coordinates
-    for (L = 0 ; L < Lmax ; L++) {
-    for (K = 0 ; K < Kmax ; K++) {
-    for (J = 0 ; J < Jmax ; J++) {
+    for (L = 0; L < Lmax; L++) {
+    for (K = 0; K < Kmax; K++) {
+    for (J = 0; J < Jmax; J++) {
 
-    //for (J = 0 ; J < Jmax ; J++) {
-    //for (K = 0 ; K < Kmax ; K++) {
-    //for (L = 0 ; L < Lmax ; L++) {
+    //for (J = 0; J < Jmax; J++) {
+    //for (K = 0; K < Kmax; K++) {
+    //for (L = 0; L < Lmax; L++) {
 
       if (Coordinates == RECTANGULAR) {
         x = x_lb + (double)J * dx;
