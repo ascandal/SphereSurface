@@ -16,11 +16,13 @@
  *  surface-sphere -d 0.002
  */
 
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <errno.h>
+#include <unistd.h>
 
 
 #define max(x,y)  (((x) < (y)) ? (y) : (x))
@@ -41,7 +43,7 @@
                                                                   \
   array_name = (type **) calloc((jd), sizeof(type *));            \
                                                                   \
-  for (ii = 0; ii < (jd); ii++){                                  \
+  for (ii = 0; ii < (jd); ii++                                   \
     (array_name[ii]) = (type *) calloc((kd), sizeof(type));       \
   }                                                               \
 }
@@ -68,6 +70,46 @@
  */
 int main(int argc, char **argv)
 {
+  double radius = 0.5e0;
+  int Coordinates = SPHERICAL;
+  int c;
+
+  // Parsing command line arguments with getopt
+  while ((c = getopt(argc, argv, "r:p:")) != -1) {
+    switch (c) {
+      case 'r':
+        radius = strtod(optarg, NULL);
+        break;
+      case 'p':
+        Coordinates = atoi(optarg);
+        break;
+      case '?':
+        if (optopt == 'c')
+          fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+        else if (isprint (optopt))
+          fprintf (stderr, "Unknown option `-%c'.\n", optopt);
+        else
+          fprintf (stderr, "Unknown option character `\\x%x'.\n", optopt);
+        return 1;
+      default:
+        abort();
+    }
+  }
+
+  printf("Starting surface-sphere:\n");
+  if (Coordinates == RECTANGULAR) {
+    printf("Parameterization : RECTANGULAR\n");
+  } else if (Coordinates == SPHERICAL) {
+    printf("Parameterization : SPHERICAL\n");
+  } else if (Coordinates == BOX_PROJECTION) {
+    printf("Parameterization : BOX_PROJECTION\n");
+  } else if (Coordinates == YIN_YANG) {
+    printf("Parameterization : YIN_YANG\n");
+  } else if (Coordinates == TWO_CAPS) {
+    printf("Parameterization : TWO_CAPS\n");
+  }
+  printf("Sphere radius : %e\n", radius);
+
   //------------------------+-------------------------------------------------------------
   // Open File to write     |
   //------------------------+
@@ -85,20 +127,6 @@ int main(int argc, char **argv)
   int G, Gmax;
 
   // Coordinate dimensions
-
-  double radius = 0.5e0;
-
-  //------------------------------------------+------------------------
-  // Choose the type of patch surface mesh.   |
-  //------------------------------------------+
-  //int Coordinates = RECTANGULAR;
-  //int Coordinates = SPHERICAL;
-  //int Coordinates = BOX_PROJECTION;
-  //int Coordinates = YIN_YANG;
-  int Coordinates = TWO_CAPS;
-  //------------------------------------------+
-  // Choose the type of patch surface mesh.   |
-  //------------------------------------------+------------------------
 
   double x, y, z;
 
