@@ -1,7 +1,7 @@
 /**
  * \file surface-sphere.c
  * \author Angelo L. Scandaliato
- * \brief Outputs the surface of a sphere in PLOT3D format (file extension .xyz).
+ * \brief Outputs the surface mesh of a sphere in PLOT3D format (file extension .xyz).
  * The sphere is centered about the origin (0, 0, 0).
  * There are multiple parameterizations to choose from. Some with overlapping
  * mesh parts to be used with other overset grid methods.
@@ -752,10 +752,9 @@ int main(int argc, char **argv)
 
   }  //End: G for-loop
 
-
   fclose(outfile);
 
-  printf("\n\n    >>>  run complete <<<\n\n");
+  printf("\n\n>>> Surface Mesh File Complete <<<\n\n");
 
   return 0;
 }  // End: main()
