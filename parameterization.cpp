@@ -2,10 +2,22 @@ class Parameterization {
   public:
 
   Parameterization() {}
-  void PrintHeader() {}
+
+  /*
+   * READ(1) NGRID
+   * READ(1) (JD(IG),KD(IG),LD(IG),IG=1,NGRID)
+   */
+  void PrintPlot3DHeader(FILE *outfile) {
+    fprintf(outfile, "%i\n", Gmax);
+    for (G = 0; G < Gmax; G++) {
+      fprintf(outfile, "%i %i %i\n", Jmax, Kmax, Lmax);
+    }
+  }
 
   private:
-    // Indices to loop over x, y, z directions and group.
+    string name;
+
+    // Indices to loop over x, y, z directions and the grid partitions.
     int J, K, L, G;
     int Jmax, Kmax, Lmax, Gmax;
 
@@ -28,6 +40,8 @@ class Rectangular : private Parameterization {
   public:
 
   Rectangular() {
+    name = "RECTANGULAR";
+
     Jmax = 200;
     Kmax = 100;
     Lmax = 1;
@@ -47,6 +61,8 @@ class Spherical : private Parameterization {
   public:
 
   Spherical() {
+    name = "SPHERICAL";
+
     Jmax = 200;
     Kmax = 100;
     Lmax = 1;
@@ -70,6 +86,8 @@ class BoxProjection : private Parameterization {
   public:
 
   BoxProjection() {
+    name = "BOX_PROJECTION";
+
     double rad_B, proj;
 
     Jmax = 20;
@@ -99,6 +117,8 @@ class YinYang : private Parameterization {
   public:
 
   YinYang() {
+    name = "YIN_YANG";
+
     Jmax = 120;
     Kmax = 60;
     Lmax = 1;
@@ -130,6 +150,8 @@ class TwoCaps : private Parameterization {
   public:
 
   TwoCaps() {
+    name = "TWO_CAPS";
+
     Jmax = 160;
     //Kmax = 36;
     Lmax = 1;
@@ -188,6 +210,17 @@ class TwoCaps : private Parameterization {
     dx = (x_ub - x_lb) / (double)(Jmax_cap - 1);
     dy = (y_ub - y_lb) / (double)(Jmax_cap - 1);
     dz = (z_ub - z_lb) / (double)(Jmax_cap - 1);
+  }
+
+  /*
+   * READ(1) NGRID
+   * READ(1) (JD(IG),KD(IG),LD(IG),IG=1,NGRID)
+   */
+  void PrintPlot3DHeader(FILE *outfile) {
+    fprintf(outfile, "%i\n", Gmax);
+    fprintf(outfile, "%i %i %i\n", Jmax, Kmax, Lmax);
+    fprintf(outfile, "%i %i %i\n", Jmax_cap, Kmax_cap, Lmax);
+    fprintf(outfile, "%i %i %i\n", Jmax_cap, Kmax_cap, Lmax);
   }
 
   private:

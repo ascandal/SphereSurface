@@ -97,40 +97,14 @@ int main(int argc, char **argv)
   }
 
   printf("Starting surface-sphere:\n");
-  if (Coordinates == RECTANGULAR) {
-    printf("Parameterization : RECTANGULAR\n");
-  } else if (Coordinates == SPHERICAL) {
-    printf("Parameterization : SPHERICAL\n");
-  } else if (Coordinates == BOX_PROJECTION) {
-    printf("Parameterization : BOX_PROJECTION\n");
-  } else if (Coordinates == YIN_YANG) {
-    printf("Parameterization : YIN_YANG\n");
-  } else if (Coordinates == TWO_CAPS) {
-    printf("Parameterization : TWO_CAPS\n");
-  }
+  printf("Parameterization : %e\n", param->name);
   printf("Sphere radius : %e\n", radius);
 
   //------------------------+-------------------------------------------------------------
   // Open File to write     |
   //------------------------+
   FILE *outfile;
-
   outfile = fopen("SphereSurf.fmt", "w");
-
-
-  //  READ(1) NGRID
-  fprintf(outfile, "%i\n", Gmax);
-
-  //  READ(1) (JD(IG),KD(IG),LD(IG),IG=1,NGRID)
-  if (Coordinates == TWO_CAPS) {
-    fprintf(outfile, "%i %i %i\n", Jmax, Kmax, Lmax);
-    fprintf(outfile, "%i %i %i\n", Jmax_cap, Kmax_cap, Lmax);
-    fprintf(outfile, "%i %i %i\n", Jmax_cap, Kmax_cap, Lmax);
-  } else {
-    for (G = 0; G < Gmax; G++) {
-      fprintf(outfile, "%i %i %i\n", Jmax, Kmax, Lmax);
-    }
-  }
 
 
   for (G = 0; G < Gmax; G++) {
