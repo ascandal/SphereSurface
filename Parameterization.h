@@ -14,8 +14,9 @@ public:
   double coordinateY(int J, int K, int L, int G);
   double coordinateZ(int J, int K, int L, int G);
 
-private:
   string name;
+
+  double radius;
 
   // Indices to loop over x, y, z directions and the grid partitions.
   int J, K, L, G;
@@ -33,6 +34,9 @@ private:
   double theta1_lb, theta1_ub;
   double theta2_lb, theta2_ub;
   double d_theta1, d_theta2;
+
+  // support variables.
+  double rad_B, proj;
 };
 
 
@@ -73,7 +77,10 @@ public:
   TwoCaps();
   void PrintPlot3DHeader(ofstream& outfile);
 
-private:
+  int Jmax_cap, Kmax_cap;
+  double theta1_cap_lb, theta1_cap_ub;
+  double d_theta1_cap, d_theta2_cap;
+  double theta2_cap_lb, theta2_cap_ub;
 };
 
 #endif

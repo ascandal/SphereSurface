@@ -76,6 +76,18 @@ void Parameterization::PrintPlot3D(ofstream& outfile) {
   }  //End: G for-loop
 }
 
+double Parameterization::coordinateX(int J, int K, int L, int G) {
+  return 0;
+}
+
+double Parameterization::coordinateY(int J, int K, int L, int G) {
+  return 0;
+}
+
+double Parameterization::coordinateZ(int J, int K, int L, int G) {
+  return 0;
+}
+
 
 
 
@@ -171,8 +183,6 @@ double Spherical::coordinateZ(int J, int K, int L, int G) {
 
 BoxProjection::BoxProjection() {
   name = "BOX_PROJECTION";
-
-  double rad_B, proj;
 
   Jmax = 20;
   Kmax = 20;
@@ -453,20 +463,20 @@ TwoCaps::TwoCaps() {
   double cap_overlap = 2.0e0 * d_theta2;      // (1.0e0 / 15.0e0) * PI;
 
   // Angle in the xy-plane
-  double theta1_cap_lb = -theta2_lb - cap_overlap;
-  double theta1_cap_ub =  theta2_lb + cap_overlap;
+  theta1_cap_lb = -theta2_lb - cap_overlap;
+  theta1_cap_ub =  theta2_lb + cap_overlap;
 
-  int Jmax_cap = (int)((theta1_cap_ub - theta1_cap_lb) / d_theta1) + 1;
+  Jmax_cap = (int)((theta1_cap_ub - theta1_cap_lb) / d_theta1) + 1;
 
-  double d_theta1_cap = (theta1_cap_ub - theta1_cap_lb) / (double)(Jmax_cap - 1);
+  d_theta1_cap = (theta1_cap_ub - theta1_cap_lb) / (double)(Jmax_cap - 1);
 
   // Angle between positive z-axis and radius.
-  double theta2_cap_lb =  PI / 2.0e0 - theta2_lb - cap_overlap;
-  double theta2_cap_ub =  PI / 2.0e0 + theta2_lb + cap_overlap;
+  theta2_cap_lb =  PI / 2.0e0 - theta2_lb - cap_overlap;
+  theta2_cap_ub =  PI / 2.0e0 + theta2_lb + cap_overlap;
 
-  int Kmax_cap = (int)((theta1_cap_ub - theta1_cap_lb) / d_theta1) + 1;
+  Kmax_cap = (int)((theta1_cap_ub - theta1_cap_lb) / d_theta1) + 1;
 
-  double d_theta2_cap = (theta2_cap_ub - theta2_cap_lb) / (double)(Kmax_cap - 1);
+  d_theta2_cap = (theta2_cap_ub - theta2_cap_lb) / (double)(Kmax_cap - 1);
 
   //-----------------------------------------------------
   x_lb = -radius - 0.1e0;
