@@ -29,7 +29,7 @@ private:
 }
 
 
-class Rectangular : private Parameterization {
+class Rectangular : public Parameterization {
 public:
   Rectangular();
 
@@ -37,7 +37,7 @@ private:
 }
 
 
-class Spherical : private Parameterization {
+class Spherical : public Parameterization {
 public:
   Spherical();
 
@@ -45,7 +45,7 @@ private:
 }
 
 
-class BoxProjection : private Parameterization {
+class BoxProjection : public Parameterization {
 public:
   BoxProjection();
 
@@ -53,7 +53,7 @@ private:
 }
 
 
-class YinYang : private Parameterization {
+class YinYang : public Parameterization {
 public:
   YinYang();
 
@@ -61,7 +61,7 @@ private:
 }
 
 
-class TwoCaps : private Parameterization {
+class TwoCaps : public Parameterization {
 public:
   TwoCaps();
   void PrintPlot3DHeader(FILE *outfile);

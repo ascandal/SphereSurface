@@ -1,4 +1,5 @@
-#include "parameterization.h"
+#include "Parameterization.h"
+#include "GobalMacros.h"
 
 Parameterization::Parameterization() {}
 
@@ -17,6 +18,15 @@ Parameterization::PrintPlot3DHeader(FILE *outfile) {
 
 /*
  * Print the entire PLOT3D formatted surface parameterization to the output file.
+ * The PLOT3D format (file extension .xyz) is described by its read method:
+ * READ(1) NGRID
+ * READ(1) (JD(IG),KD(IG),LD(IG),IG=1,NGRID)
+ * DO IG = 1,NGRID
+ *   READ(1) (((X(J,K,L),J=1,JD(IG)),K=1,KD(IG)),L=1,LD(IG)),
+ *   &       (((Y(J,K,L),J=1,JD(IG)),K=1,KD(IG)),L=1,LD(IG)),
+ *   &       (((Z(J,K,L),J=1,JD(IG)),K=1,KD(IG)),L=1,LD(IG)),
+ *   &       (((IBLANK(J,K,L),J=1,JD(IG)),K=1,KD(IG)),L=1,LD(IG))
+ * ENDDO
  */
 void Parameterization::PrintPlot3D(FILE *outfile) {
 

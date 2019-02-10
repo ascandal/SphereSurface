@@ -24,7 +24,7 @@
 #include <errno.h>
 #include <unistd.h>
 
-#include "parameterization.h"
+#include "Parameterization.h"
 
 
 #define max(x,y)  (((x) < (y)) ? (y) : (x))
@@ -50,19 +50,9 @@
 #define YIN_YANG           (3)
 #define TWO_CAPS           (4)
 
-/*
- * The PLOT3D format (file extension .xyz) is described by its read method:
- * READ(1) NGRID
- * READ(1) (JD(IG),KD(IG),LD(IG),IG=1,NGRID)
- * DO IG = 1,NGRID
- *   READ(1) (((X(J,K,L),J=1,JD(IG)),K=1,KD(IG)),L=1,LD(IG)),
- *   &       (((Y(J,K,L),J=1,JD(IG)),K=1,KD(IG)),L=1,LD(IG)),
- *   &       (((Z(J,K,L),J=1,JD(IG)),K=1,KD(IG)),L=1,LD(IG)),
- *   &       (((IBLANK(J,K,L),J=1,JD(IG)),K=1,KD(IG)),L=1,LD(IG))
- * ENDDO
- */
 int main(int argc, char **argv)
 {
+  Parameterization* param;
   double radius = 0.5e0;
   int Coordinates = SPHERICAL;
   int c;
