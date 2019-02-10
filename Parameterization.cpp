@@ -92,7 +92,7 @@ double Parameterization::coordinateZ(int J, int K, int L, int G) {
 
 
 Rectangular::Rectangular(double radius) : Parameterization(radius) {
-  name = "RECTANGULAR";
+  name = "Rectangular";
 
   Jmax = 200;
   Kmax = 100;
@@ -140,7 +140,7 @@ double Rectangular::coordinateZ(int J, int K, int L, int G) {
 
 
 Spherical::Spherical(double radius) : Parameterization(radius) {
-  name = "SPHERICAL";
+  name = "Spherical";
 
   Jmax = 200;
   Kmax = 100;
@@ -182,7 +182,7 @@ double Spherical::coordinateZ(int J, int K, int L, int G) {
 
 
 BoxProjection::BoxProjection(double radius) : Parameterization(radius) {
-  name = "BOX_PROJECTION";
+  name = "BoxProjection";
 
   Jmax = 20;
   Kmax = 20;
@@ -334,7 +334,7 @@ double BoxProjection::coordinateZ(int J, int K, int L, int G) {
 
 
 YinYang::YinYang(double radius) : Parameterization(radius) {
-  name = "YIN_YANG";
+  name = "YinYang";
 
   Jmax = 120;
   Kmax = 60;
@@ -435,7 +435,7 @@ void TwoCaps::PrintPlot3DHeader(ofstream& outfile) {
 }
 
 TwoCaps::TwoCaps(double radius) : Parameterization(radius) {
-  name = "TWO_CAPS";
+  name = "TwoCaps";
 
   Jmax = 160;
   //Kmax = 36;

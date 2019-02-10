@@ -16,7 +16,7 @@
  *  g++ -std=c++11 SurfaceSphere.cpp Parameterization.cpp -o SurfaceSphere
  *
  * Usage:
- *  surface-sphere -d 0.002
+ *  ./SurfaceSphere -r 0.002 -p 3
  */
 
 #include <ctype.h>
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 {
   Parameterization* param;
   double radius = 0.5e0;
-  int Coordinates = SPHERICAL;
+  int coordinates = SPHERICAL;
   int c;
 
   // Parsing command line arguments with getopt
@@ -53,7 +53,7 @@ int main(int argc, char **argv)
         radius = strtod(optarg, NULL);
         break;
       case 'p':
-        Coordinates = atoi(optarg);
+        coordinates = atoi(optarg);
         break;
       case '?':
         if (optopt == 'c')
@@ -68,10 +68,28 @@ int main(int argc, char **argv)
     }
   }
 
+  switch (coordinates) {
+    case RECTANGULAR:
+      param = new Rectangular(radius);
+      break;
+    case SPHERICAL:
+      param = new Spherical(radius);
+      break;
+    case BOX_PROJECTION:
+      param = new BoxProjection(radius);
+      break;
+    case YIN_YANG:
+      param = new YinYang(radius);
+      break;
+    case TWO_CAPS:
+      param = new TwoCaps(radius);
+      break;
+  }
+
   // Initial log to console.
   cout << ">>> Starting SurfaceSphere <<<\n";
-  cout << "Using Parameterization = " << param->GetName() << endl;
   cout << "Sphere Radius = " << radius << endl;
+  cout << "Using Parameterization = " << param->GetName() << endl;
 
 
   // Open file to write.
