@@ -6,7 +6,7 @@ using namespace std;
 
 class Parameterization {
 public:
-  Parameterization();
+  Parameterization(double radius);
   void PrintPlot3DHeader(ofstream& outfile);
   void PrintPlot3D(ofstream& outfile);
   string GetName();
@@ -28,21 +28,12 @@ public:
   double y_lb, y_ub;
   double z_lb, z_ub;
   double dx, dy, dz;
-
-  // Angular coordinates.
-  double theta1, theta2;
-  double theta1_lb, theta1_ub;
-  double theta2_lb, theta2_ub;
-  double d_theta1, d_theta2;
-
-  // support variables.
-  double rad_B, proj;
 };
 
 
 class Rectangular : public Parameterization {
 public:
-  Rectangular();
+  Rectangular(double radius);
   double coordinateX(int J, int K, int L, int G);
   double coordinateY(int J, int K, int L, int G);
   double coordinateZ(int J, int K, int L, int G);
@@ -51,39 +42,63 @@ public:
 
 class Spherical : public Parameterization {
 public:
-  Spherical();
+  Spherical(double radius);
   double coordinateX(int J, int K, int L, int G);
   double coordinateY(int J, int K, int L, int G);
   double coordinateZ(int J, int K, int L, int G);
+
+  // Angular coordinates.
+  double theta1, theta2;
+  double theta1_lb, theta1_ub;
+  double theta2_lb, theta2_ub;
+  double d_theta1, d_theta2;
 };
 
 
 class BoxProjection : public Parameterization {
 public:
-  BoxProjection();
+  BoxProjection(double radius);
   double coordinateX(int J, int K, int L, int G);
   double coordinateY(int J, int K, int L, int G);
   double coordinateZ(int J, int K, int L, int G);
+
+  // support variables.
+  double rad_B, proj;
 };
 
 
 class YinYang : public Parameterization {
 public:
-  YinYang();
+  YinYang(double radius);
   double coordinateX(int J, int K, int L, int G);
   double coordinateY(int J, int K, int L, int G);
   double coordinateZ(int J, int K, int L, int G);
+
+  // Angular coordinates.
+  double theta1, theta2;
+  double theta1_lb, theta1_ub;
+  double theta2_lb, theta2_ub;
+  double d_theta1, d_theta2;
 };
 
 
 class TwoCaps : public Parameterization {
 public:
-  TwoCaps();
+  TwoCaps(double radius);
   double coordinateX(int J, int K, int L, int G);
   double coordinateY(int J, int K, int L, int G);
   double coordinateZ(int J, int K, int L, int G);
   void PrintPlot3DHeader(ofstream& outfile);
   void GridIndexRanges(ofstream& outfile);
+
+  // support variables.
+  double rad_B, proj;
+
+  // Angular coordinates.
+  double theta1, theta2;
+  double theta1_lb, theta1_ub;
+  double theta2_lb, theta2_ub;
+  double d_theta1, d_theta2;
 
   int Jmax_cap, Kmax_cap;
   double theta1_cap_lb, theta1_cap_ub;

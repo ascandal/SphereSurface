@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Parameterization::Parameterization() {}
+Parameterization::Parameterization(double radius) : radius(radius) {}
 
 string Parameterization::GetName() {
   return name;
@@ -91,7 +91,7 @@ double Parameterization::coordinateZ(int J, int K, int L, int G) {
 
 
 
-Rectangular::Rectangular() {
+Rectangular::Rectangular(double radius) : Parameterization(radius) {
   name = "RECTANGULAR";
 
   Jmax = 200;
@@ -139,7 +139,7 @@ double Rectangular::coordinateZ(int J, int K, int L, int G) {
 }
 
 
-Spherical::Spherical() {
+Spherical::Spherical(double radius) : Parameterization(radius) {
   name = "SPHERICAL";
 
   Jmax = 200;
@@ -181,7 +181,7 @@ double Spherical::coordinateZ(int J, int K, int L, int G) {
 
 
 
-BoxProjection::BoxProjection() {
+BoxProjection::BoxProjection(double radius) : Parameterization(radius) {
   name = "BOX_PROJECTION";
 
   Jmax = 20;
@@ -333,7 +333,7 @@ double BoxProjection::coordinateZ(int J, int K, int L, int G) {
 }
 
 
-YinYang::YinYang() {
+YinYang::YinYang(double radius) : Parameterization(radius) {
   name = "YIN_YANG";
 
   Jmax = 120;
@@ -434,7 +434,7 @@ void TwoCaps::PrintPlot3DHeader(ofstream& outfile) {
   outfile << Jmax_cap << " " << Kmax_cap << " " << Lmax << endl;
 }
 
-TwoCaps::TwoCaps() {
+TwoCaps::TwoCaps(double radius) : Parameterization(radius) {
   name = "TWO_CAPS";
 
   Jmax = 160;
@@ -453,8 +453,6 @@ TwoCaps::TwoCaps() {
   theta2_ub = (4.0e0 / 5.0e0) * PI;
 
   Kmax = (int)((theta2_ub - theta2_lb) / d_theta1) + 1;
-
-  printf("\n( Jmax , Kmax ) = ( %i , %i )\n", Jmax, Kmax);
 
   d_theta2 = (theta2_ub - theta2_lb) / (double)(Kmax - 1.0e0);
 
