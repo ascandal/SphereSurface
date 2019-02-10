@@ -10,6 +10,9 @@ public:
   void PrintPlot3DHeader(ofstream& outfile);
   void PrintPlot3D(ofstream& outfile);
   string GetName();
+  double coordinateX(int J, int K, int L, int G);
+  double coordinateY(int J, int K, int L, int G);
+  double coordinateZ(int J, int K, int L, int G);
 
 private:
   string name;

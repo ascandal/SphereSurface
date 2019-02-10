@@ -19,7 +19,7 @@ string Parameterization::GetName() {
  * READ(1) NGRID
  * READ(1) (JD(IG),KD(IG),LD(IG),IG=1,NGRID)
  */
-Parameterization::PrintPlot3DHeader(ofstream& outfile) {
+void Parameterization::PrintPlot3DHeader(ofstream& outfile) {
   outfile << Gmax << endl;
   for (G = 0; G < Gmax; G++) {
     outfile << Jmax << " " << Kmax << " " << Lmax << endl;
@@ -43,434 +43,35 @@ void Parameterization::PrintPlot3D(ofstream& outfile) {
   PrintPlot3DHeader(outfile);
 
   for (G = 0; G < Gmax; G++) {
-    //---------------------------------------+-------------------------
-    // Choose Index Ranges for each grid.    |
-    //---------------------------------------+
-    if (Coordinates == RECTANGULAR) {
-      Jmax = Jmax;
-      Kmax = Kmax;
-      Lmax = Lmax;
-
-    } else if (Coordinates == SPHERICAL) {
-      Jmax = Jmax;
-      Kmax = Kmax;
-      Lmax = Lmax;
-
-    } else if (Coordinates == BOX_PROJECTION) {
-      Jmax = Jmax;
-      Kmax = Kmax;
-      Lmax = Lmax;
-
-    } else if (Coordinates == YIN_YANG) {
-      Jmax = Jmax;
-      Kmax = Kmax;
-      Lmax = Lmax;
-
-    } else if (Coordinates == TWO_CAPS) {
-
-      switch (G) {
-        case 0: // Low latitude spherical shell
-          Jmax = Jmax;
-          Kmax = Kmax;
-          Lmax = Lmax;
-          break;
-        case 1: // Top cap
-          Jmax = Jmax_cap;
-          Kmax = Kmax_cap;
-          Lmax = Lmax;
-          break;
-        case 2: // Bottom cap
-          Jmax = Jmax_cap;
-          Kmax = Kmax_cap;
-          Lmax = Lmax;
-          break;
-      }
-    }
-    //---------------------------------------+
-    // Choose Index Ranges for each grid.    |
-    //---------------------------------------+-------------------------
-
-
-
-
-
     // All x-coordinates
     for (L = 0; L < Lmax; L++) {
     for (K = 0; K < Kmax; K++) {
     for (J = 0; J < Jmax; J++) {
-
-    //for (J = 0; J < Jmax; J++) {
-    //for (K = 0; K < Kmax; K++) {
-    //for (L = 0; L < Lmax; L++) {
-
-      if (Coordinates == RECTANGULAR) {
-        x = x_lb + (double)J * dx;
-      } else if (Coordinates == SPHERICAL) {
-
-        theta1 = theta1_lb + (double)J * d_theta1;
-        theta2 = theta2_lb + (double)K * d_theta2;
-
-        x = radius * sin(theta2) * sin(theta1);
-      } else if (Coordinates == BOX_PROJECTION) {
-
-        switch (G) {
-          case 0:  // Lower z
-            x = x_lb + (double)J * dx;
-            y = y_lb + (double)K * dy;
-            z = z_lb;
-            break;
-          case 1:  // Lower y
-            x = x_ub - (double)J * dx;
-            y = y_lb;
-            z = z_lb + (double)K * dz;
-            break;
-          case 2:  // Lower x
-            x = x_lb;
-            y = y_lb + (double)J * dy;
-            z = z_lb + (double)K * dz;
-            break;
-          case 3:  // Upper z
-            x = x_ub - (double)J * dx;
-            y = y_lb + (double)K * dy;
-            z = z_ub;
-            break;
-          case 4:  // Upper y
-            x = x_lb + (double)J * dx;
-            y = y_ub;
-            z = z_lb + (double)K * dz;
-            break;
-          case 5:  // Upper x
-            x = x_ub;
-            y = y_ub - (double)J * dy;
-            z = z_lb + (double)K * dz;
-            break;
-        }
-
-        rad_B = sqrt(x * x + y * y + z * z);
-
-        proj = radius / rad_B;
-
-        x *= proj;
-
-      } else if (Coordinates == YIN_YANG) {
-
-        switch (G) {
-          case 0:  // Yin
-            theta1 = theta1_lb + (double)J * d_theta1;
-            theta2 = theta2_lb + (double)K * d_theta2;
-            x = radius * sin(theta2) * sin(theta1);
-            break;
-          case 1:  // Yang
-            theta1 = theta1_lb + (double)J * d_theta1;
-            theta2 = theta2_lb + (double)K * d_theta2;
-            //x = radius * sin(theta2) * sin(theta1);
-            x = radius * cos(theta2);
-            break;
-        }
-      } else if (Coordinates == TWO_CAPS) {
-
-        switch (G) {
-          case 0:  // Low latitude spherical shell
-            theta1 = theta1_lb + (double)J * d_theta1;
-            theta2 = theta2_lb + (double)K * d_theta2;
-            x = radius * sin(theta2) * sin(theta1);
-            break;
-          case 1:  // Top cap
-            theta1 = theta1_cap_lb + (double)J * d_theta1_cap;
-            theta2 = theta2_cap_lb + (double)K * d_theta2_cap;
-            x = radius * sin(theta2) * sin(theta1);
-
-            x = x_lb + (double)J * dx;
-            y = y_lb + (double)K * dy;
-            z = z_ub;
-
-            rad_B = sqrt(x * x + y * y + z * z);
-            proj = radius / rad_B;
-            x *= proj;
-            break;
-          case 2:  // Bottom cap
-            theta1 = theta1_cap_lb + (double)J * d_theta1_cap;
-            theta2 = theta2_cap_lb + (double)K * d_theta2_cap;
-            x = radius * sin(theta2) * sin(theta1);
-
-            x = x_ub - (double)J * dx;
-            y = y_lb + (double)K * dy;
-            z = z_lb;
-
-            rad_B = sqrt(x * x + y * y + z * z);
-            proj = radius / rad_B;
-            x *= proj;
-            break;
-        }
-      }
-
-      outfile << x << " ";
-
+      outfile << coordinateX(J, K, L, G) << " ";
     }
     }
     outfile << endl;
     }
-
-
 
     // All y-coordinates
     for (L = 0; L < Lmax; L++) {
     for (K = 0; K < Kmax; K++) {
     for (J = 0; J < Jmax; J++) {
-
-    //for (J = 0; J < Jmax; J++) {
-    //for (K = 0; K < Kmax; K++) {
-    //for (L = 0; L < Lmax; L++) {
-
-      if (Coordinates == RECTANGULAR) {
-        x = x_lb + (double)J * dx;
-
-        y_lb = -sqrt(radius * radius - x * x);
-        y_ub =  sqrt(radius * radius - x * x);
-
-        dy = (y_ub - y_lb) / (double)(Kmax - 1);
-
-        y = y_lb + (double)K * dy;
-
-      } else if (Coordinates == SPHERICAL) {
-
-        theta1 = theta1_lb + (double)J * d_theta1;
-        theta2 = theta2_lb + (double)K * d_theta2;
-
-        y = radius * sin(theta2) * cos(theta1);
-      } else if (Coordinates == BOX_PROJECTION) {
-
-        switch (G) {
-          case 0:  // Lower z
-            x = x_lb + (double)J * dx;
-            y = y_lb + (double)K * dy;
-            z = z_lb;
-            break;
-          case 1:  // Lower y
-            x = x_ub - (double)J * dx;
-            y = y_lb;
-            z = z_lb + (double)K * dz;
-            break;
-          case 2:  // Lower x
-            x = x_lb;
-            y = y_lb + (double)J * dy;
-            z = z_lb + (double)K * dz;
-            break;
-          case 3:  // Upper z
-            x = x_ub - (double)J * dx;
-            y = y_lb + (double)K * dy;
-            z = z_ub;
-            break;
-          case 4:  // Upper y
-            x = x_lb + (double)J * dx;
-            y = y_ub;
-            z = z_lb + (double)K * dz;
-            break;
-          case 5:  // Upper x
-            x = x_ub;
-            y = y_ub - (double)J * dy;
-            z = z_lb + (double)K * dz;
-            break;
-        }
-
-        rad_B = sqrt(x * x + y * y + z * z);
-
-        proj = radius / rad_B;
-
-        y *= proj;
-      } else if (Coordinates == YIN_YANG) {
-
-        switch (G) {
-          case 0:  // Yin
-            theta1 = theta1_lb + (double)J * d_theta1;
-            theta2 = theta2_lb + (double)K * d_theta2;
-            y = radius * sin(theta2) * cos(theta1);
-            break;
-          case 1:  // Yang
-            theta1 = theta1_lb + (double)J * d_theta1;
-            theta2 = theta2_lb + (double)K * d_theta2;
-            //y = radius * cos(theta2);
-            y = -radius * sin(theta2) * cos(theta1);
-            break;
-        }
-      } else if (Coordinates == TWO_CAPS) {
-
-        switch (G) {
-          case 0:  // Low latitude spherical shell
-            theta1 = theta1_lb + (double)J * d_theta1;
-            theta2 = theta2_lb + (double)K * d_theta2;
-            y = radius * sin(theta2) * cos(theta1);
-            break;
-          case 1:  // Top cap
-            theta1 = theta1_cap_lb + (double)J * d_theta1_cap;
-            theta2 = theta2_cap_lb + (double)K * d_theta2_cap;
-            y = -radius * cos(theta2);
-
-            x = x_lb + (double)J * dx;
-            y = y_lb + (double)K * dy;
-            z = z_ub;
-
-            rad_B = sqrt(x * x + y * y + z * z);
-            proj = radius / rad_B;
-            y *= proj;
-            break;
-          case 2:  // Bottom cap
-            theta1 = theta1_cap_lb + (double)J * d_theta1_cap;
-            theta2 = theta2_cap_lb + (double)K * d_theta2_cap;
-            y =  radius * cos(theta2);
-
-            x = x_ub - (double)J * dx;
-            y = y_lb + (double)K * dy;
-            z = z_lb;
-
-            rad_B = sqrt(x * x + y * y + z * z);
-            proj = radius / rad_B;
-            y *= proj;
-            break;
-        }
-      }
-
-      outfile << y << " ";
-
+      outfile << coordinateY(J, K, L, G) << " ";
     }
     }
     outfile << endl;
     }
-
-
-
 
     // All z-coordinates
     for (L = 0; L < Lmax; L++) {
     for (K = 0; K < Kmax; K++) {
     for (J = 0; J < Jmax; J++) {
-
-    //for (J = 0; J < Jmax; J++) {
-    //for (K = 0; K < Kmax; K++) {
-    //for (L = 0; L < Lmax; L++) {
-
-      if (Coordinates == RECTANGULAR) {
-        x = x_lb + (double)J * dx;
-
-        y_lb = -sqrt(radius * radius - x * x);
-        y_ub =  sqrt(radius * radius - x * x);
-
-        dy = (y_ub - y_lb) / (double)(Kmax - 1);
-
-        y = y_lb + (double)K * dy;
-
-        //z_lb =  0.0e0;
-        //z_ub =  sqrt(radius * radius - x * x - y * y);
-
-        //dz = (z_ub - z_lb) / (double)(Lmax - 1);
-
-        z = sqrt(max(0.0e0, radius * radius - x * x - y * y));
-
-      } else if (Coordinates == SPHERICAL) {
-
-        theta1 = theta1_lb + (double)J * d_theta1;
-        theta2 = theta2_lb + (double)K * d_theta2;
-
-        z = radius * cos(theta2);
-      } else if (Coordinates == BOX_PROJECTION) {
-
-        switch (G) {
-          case 0:  // Lower z
-            x = x_lb + (double)J * dx;
-            y = y_lb + (double)K * dy;
-            z = z_lb;
-            break;
-          case 1:  // Lower y
-            x = x_ub - (double)J * dx;
-            y = y_lb;
-            z = z_lb + (double)K * dz;
-            break;
-          case 2:  // Lower x
-            x = x_lb;
-            y = y_lb + (double)J * dy;
-            z = z_lb + (double)K * dz;
-            break;
-          case 3:  // Upper z
-            x = x_ub - (double)J * dx;
-            y = y_lb + (double)K * dy;
-            z = z_ub;
-            break;
-          case 4:  // Upper y
-            x = x_lb + (double)J * dx;
-            y = y_ub;
-            z = z_lb + (double)K * dz;
-            break;
-          case 5:  // Upper x
-            x = x_ub;
-            y = y_ub - (double)J * dy;
-            z = z_lb + (double)K * dz;
-            break;
-        }
-
-        rad_B = sqrt(x * x + y * y + z * z);
-
-        proj = radius / rad_B;
-
-        z *= proj;
-      } else if (Coordinates == YIN_YANG) {
-
-        switch (G) {
-          case 0:  // Yin
-            theta1 = theta1_lb + (double)J * d_theta1;
-            theta2 = theta2_lb + (double)K * d_theta2;
-            z = radius * cos(theta2);
-            break;
-          case 1:  // Yang
-            theta1 = theta1_lb + (double)J * d_theta1;
-            theta2 = theta2_lb + (double)K * d_theta2;
-            //z = radius * sin(theta2) * cos(theta1);
-            z = radius * sin(theta2) * sin(theta1);
-            break;
-        }
-      } else if (Coordinates == TWO_CAPS) {
-
-        switch (G) {
-          case 0:  // Low latitude spherical shell
-            theta1 = theta1_lb + (double)J * d_theta1;
-            theta2 = theta2_lb + (double)K * d_theta2;
-            z = radius * cos(theta2);
-            break;
-          case 1:  // Top cap
-            theta1 = theta1_cap_lb + (double)J * d_theta1_cap;
-            theta2 = theta2_cap_lb + (double)K * d_theta2_cap;
-            z = radius * sin(theta2) * cos(theta1);
-
-            x = x_lb + (double)J * dx;
-            y = y_lb + (double)K * dy;
-            z = z_ub;
-
-            rad_B = sqrt(x * x + y * y + z * z);
-            proj = radius / rad_B;
-            z *= proj;
-            break;
-          case 2:  // Bottom cap
-            theta1 = theta1_cap_lb + (double)J * d_theta1_cap;
-            theta2 = theta2_cap_lb + (double)K * d_theta2_cap;
-            z = -radius * sin(theta2) * cos(theta1);
-
-            x = x_ub - (double)J * dx;
-            y = y_lb + (double)K * dy;
-            z = z_lb;
-
-            rad_B = sqrt(x * x + y * y + z * z);
-            proj = radius / rad_B;
-            z *= proj;
-            break;
-        }
-      }
-
-      outfile << z << " ";
-
+      outfile << coordinateZ(J, K, L, G) << " ";
     }
     }
     outfile << endl;
     }
-
 
   }  //End: G for-loop
 }
@@ -492,6 +93,38 @@ Rectangular::Rectangular() {
   dx = (x_ub - x_lb) / (double)(Jmax - 1);
 }
 
+double Rectangular::coordinateX(int J, int K, int L, int G) {
+  return x_lb + (double)J * dx;
+}
+
+double Rectangular::coordinateY(int J, int K, int L, int G) {
+  x = x_lb + (double)J * dx;
+
+  y_lb = -sqrt(radius * radius - x * x);
+  y_ub =  sqrt(radius * radius - x * x);
+
+  dy = (y_ub - y_lb) / (double)(Kmax - 1);
+
+  return y_lb + (double)K * dy;
+}
+
+double Rectangular::coordinateZ(int J, int K, int L, int G) {
+  x = x_lb + (double)J * dx;
+
+  y_lb = -sqrt(radius * radius - x * x);
+  y_ub =  sqrt(radius * radius - x * x);
+
+  dy = (y_ub - y_lb) / (double)(Kmax - 1);
+
+  y = y_lb + (double)K * dy;
+
+  //z_lb =  0.0e0;
+  //z_ub =  sqrt(radius * radius - x * x - y * y);
+
+  //dz = (z_ub - z_lb) / (double)(Lmax - 1);
+
+  return sqrt(max(0.0e0, radius * radius - x * x - y * y));
+}
 
 
 Spherical::Spherical() {
@@ -511,6 +144,27 @@ Spherical::Spherical() {
   theta2_ub = 0.0e0;
 
   d_theta2 = (theta2_ub - theta2_lb) / (double)(Kmax - 1);
+}
+
+double Spherical::coordinateX(int J, int K, int L, int G) {
+  theta1 = theta1_lb + (double)J * d_theta1;
+  theta2 = theta2_lb + (double)K * d_theta2;
+
+  return radius * sin(theta2) * sin(theta1);
+}
+
+double Spherical::coordinateY(int J, int K, int L, int G) {
+  theta1 = theta1_lb + (double)J * d_theta1;
+  theta2 = theta2_lb + (double)K * d_theta2;
+
+  return radius * sin(theta2) * cos(theta1);
+}
+
+double Spherical::coordinateZ(int J, int K, int L, int G) {
+  theta1 = theta1_lb + (double)J * d_theta1;
+  theta2 = theta2_lb + (double)K * d_theta2;
+
+  return radius * cos(theta2);
 }
 
 
@@ -539,6 +193,136 @@ BoxProjection::BoxProjection() {
   dz = (z_ub - z_lb) / (double)(Jmax - 1);
 }
 
+double BoxProjection::coordinateX(int J, int K, int L, int G) {
+  switch (G) {
+    case 0:  // Lower z
+      x = x_lb + (double)J * dx;
+      y = y_lb + (double)K * dy;
+      z = z_lb;
+      break;
+    case 1:  // Lower y
+      x = x_ub - (double)J * dx;
+      y = y_lb;
+      z = z_lb + (double)K * dz;
+      break;
+    case 2:  // Lower x
+      x = x_lb;
+      y = y_lb + (double)J * dy;
+      z = z_lb + (double)K * dz;
+      break;
+    case 3:  // Upper z
+      x = x_ub - (double)J * dx;
+      y = y_lb + (double)K * dy;
+      z = z_ub;
+      break;
+    case 4:  // Upper y
+      x = x_lb + (double)J * dx;
+      y = y_ub;
+      z = z_lb + (double)K * dz;
+      break;
+    case 5:  // Upper x
+      x = x_ub;
+      y = y_ub - (double)J * dy;
+      z = z_lb + (double)K * dz;
+      break;
+  }
+
+  rad_B = sqrt(x * x + y * y + z * z);
+
+  proj = radius / rad_B;
+
+  x *= proj;
+
+  return x;
+}
+
+double BoxProjection::coordinateY(int J, int K, int L, int G) {
+  switch (G) {
+    case 0:  // Lower z
+      x = x_lb + (double)J * dx;
+      y = y_lb + (double)K * dy;
+      z = z_lb;
+      break;
+    case 1:  // Lower y
+      x = x_ub - (double)J * dx;
+      y = y_lb;
+      z = z_lb + (double)K * dz;
+      break;
+    case 2:  // Lower x
+      x = x_lb;
+      y = y_lb + (double)J * dy;
+      z = z_lb + (double)K * dz;
+      break;
+    case 3:  // Upper z
+      x = x_ub - (double)J * dx;
+      y = y_lb + (double)K * dy;
+      z = z_ub;
+      break;
+    case 4:  // Upper y
+      x = x_lb + (double)J * dx;
+      y = y_ub;
+      z = z_lb + (double)K * dz;
+      break;
+    case 5:  // Upper x
+      x = x_ub;
+      y = y_ub - (double)J * dy;
+      z = z_lb + (double)K * dz;
+      break;
+  }
+
+  rad_B = sqrt(x * x + y * y + z * z);
+
+  proj = radius / rad_B;
+
+  y *= proj;
+
+  return y;
+}
+
+double BoxProjection::coordinateZ(int J, int K, int L, int G) {
+  switch (G) {
+    case 0:  // Lower z
+      x = x_lb + (double)J * dx;
+      y = y_lb + (double)K * dy;
+      z = z_lb;
+      break;
+    case 1:  // Lower y
+      x = x_ub - (double)J * dx;
+      y = y_lb;
+      z = z_lb + (double)K * dz;
+      break;
+    case 2:  // Lower x
+      x = x_lb;
+      y = y_lb + (double)J * dy;
+      z = z_lb + (double)K * dz;
+      break;
+    case 3:  // Upper z
+      x = x_ub - (double)J * dx;
+      y = y_lb + (double)K * dy;
+      z = z_ub;
+      break;
+    case 4:  // Upper y
+      x = x_lb + (double)J * dx;
+      y = y_ub;
+      z = z_lb + (double)K * dz;
+      break;
+    case 5:  // Upper x
+      x = x_ub;
+      y = y_ub - (double)J * dy;
+      z = z_lb + (double)K * dz;
+      break;
+  }
+
+  rad_B = sqrt(x * x + y * y + z * z);
+
+  proj = radius / rad_B;
+
+  z *= proj;
+
+  return z;
+}
+
+
 YinYang::YinYang() {
   name = "YIN_YANG";
 
@@ -564,6 +348,81 @@ YinYang::YinYang() {
   d_theta2 = (theta2_ub - theta2_lb) / (double)(Kmax - 1);
 }
 
+double YinYang::coordinateX(int J, int K, int L, int G) {
+  switch (G) {
+    case 0:  // Yin
+      theta1 = theta1_lb + (double)J * d_theta1;
+      theta2 = theta2_lb + (double)K * d_theta2;
+      x = radius * sin(theta2) * sin(theta1);
+      break;
+    case 1:  // Yang
+      theta1 = theta1_lb + (double)J * d_theta1;
+      theta2 = theta2_lb + (double)K * d_theta2;
+      //x = radius * sin(theta2) * sin(theta1);
+      x = radius * cos(theta2);
+      break;
+  }
+
+  return x;
+}
+
+double YinYang::coordinateY(int J, int K, int L, int G) {
+  switch (G) {
+    case 0:  // Yin
+      theta1 = theta1_lb + (double)J * d_theta1;
+      theta2 = theta2_lb + (double)K * d_theta2;
+      y = radius * sin(theta2) * cos(theta1);
+      break;
+    case 1:  // Yang
+      theta1 = theta1_lb + (double)J * d_theta1;
+      theta2 = theta2_lb + (double)K * d_theta2;
+      //y = radius * cos(theta2);
+      y = -radius * sin(theta2) * cos(theta1);
+      break;
+  }
+
+  return y;
+}
+
+double YinYang::coordinateZ(int J, int K, int L, int G) {
+  switch (G) {
+    case 0:  // Yin
+      theta1 = theta1_lb + (double)J * d_theta1;
+      theta2 = theta2_lb + (double)K * d_theta2;
+      z = radius * cos(theta2);
+      break;
+    case 1:  // Yang
+      theta1 = theta1_lb + (double)J * d_theta1;
+      theta2 = theta2_lb + (double)K * d_theta2;
+      //z = radius * sin(theta2) * cos(theta1);
+      z = radius * sin(theta2) * sin(theta1);
+      break;
+  }
+
+  return z;
+}
+
+
+
+void TwoCaps::GridIndexRanges(ofstream& outfile) {
+  // Choose index ranges for each grid.
+  // Top and bottom caps
+  if (G > 0) {
+    Jmax = Jmax_cap;
+    Kmax = Kmax_cap;
+  }
+}
+
+/*
+ * READ(1) NGRID
+ * READ(1) (JD(IG),KD(IG),LD(IG),IG=1,NGRID)
+ */
+void TwoCaps::PrintPlot3DHeader(ofstream& outfile) {
+  outfile << Gmax << endl;
+  outfile << Jmax << " " << Kmax << " " << Lmax << endl;
+  outfile << Jmax_cap << " " << Kmax_cap << " " << Lmax << endl;
+  outfile << Jmax_cap << " " << Kmax_cap << " " << Lmax << endl;
+}
 
 TwoCaps::TwoCaps() {
   name = "TWO_CAPS";
@@ -628,13 +487,116 @@ TwoCaps::TwoCaps() {
   dz = (z_ub - z_lb) / (double)(Jmax_cap - 1);
 }
 
-/*
- * READ(1) NGRID
- * READ(1) (JD(IG),KD(IG),LD(IG),IG=1,NGRID)
- */
-void TwoCaps::PrintPlot3DHeader(ofstream& outfile) {
-  outfile << Gmax << endl;
-  outfile << Jmax << " " << Kmax << " " << Lmax << endl;
-  outfile << Jmax_cap << " " << Kmax_cap << " " << Lmax << endl;
-  outfile << Jmax_cap << " " << Kmax_cap << " " << Lmax << endl;
+double TwoCaps::coordinateX(int J, int K, int L, int G) {
+  switch (G) {
+    case 0:  // Low latitude spherical shell
+      theta1 = theta1_lb + (double)J * d_theta1;
+      theta2 = theta2_lb + (double)K * d_theta2;
+      x = radius * sin(theta2) * sin(theta1);
+      break;
+    case 1:  // Top cap
+      theta1 = theta1_cap_lb + (double)J * d_theta1_cap;
+      theta2 = theta2_cap_lb + (double)K * d_theta2_cap;
+      x = radius * sin(theta2) * sin(theta1);
+
+      x = x_lb + (double)J * dx;
+      y = y_lb + (double)K * dy;
+      z = z_ub;
+
+      rad_B = sqrt(x * x + y * y + z * z);
+      proj = radius / rad_B;
+      x *= proj;
+      break;
+    case 2:  // Bottom cap
+      theta1 = theta1_cap_lb + (double)J * d_theta1_cap;
+      theta2 = theta2_cap_lb + (double)K * d_theta2_cap;
+      x = radius * sin(theta2) * sin(theta1);
+
+      x = x_ub - (double)J * dx;
+      y = y_lb + (double)K * dy;
+      z = z_lb;
+
+      rad_B = sqrt(x * x + y * y + z * z);
+      proj = radius / rad_B;
+      x *= proj;
+      break;
+  }
+
+  return x;
+}
+
+double TwoCaps::coordinateY(int J, int K, int L, int G) {
+  switch (G) {
+    case 0:  // Low latitude spherical shell
+      theta1 = theta1_lb + (double)J * d_theta1;
+      theta2 = theta2_lb + (double)K * d_theta2;
+      y = radius * sin(theta2) * cos(theta1);
+      break;
+    case 1:  // Top cap
+      theta1 = theta1_cap_lb + (double)J * d_theta1_cap;
+      theta2 = theta2_cap_lb + (double)K * d_theta2_cap;
+      y = -radius * cos(theta2);
+
+      x = x_lb + (double)J * dx;
+      y = y_lb + (double)K * dy;
+      z = z_ub;
+
+      rad_B = sqrt(x * x + y * y + z * z);
+      proj = radius / rad_B;
+      y *= proj;
+      break;
+    case 2:  // Bottom cap
+      theta1 = theta1_cap_lb + (double)J * d_theta1_cap;
+      theta2 = theta2_cap_lb + (double)K * d_theta2_cap;
+      y =  radius * cos(theta2);
+
+      x = x_ub - (double)J * dx;
+      y = y_lb + (double)K * dy;
+      z = z_lb;
+
+      rad_B = sqrt(x * x + y * y + z * z);
+      proj = radius / rad_B;
+      y *= proj;
+      break;
+  }
+
+  return y;
+}
+
+double TwoCaps::coordinateZ(int J, int K, int L, int G) {
+  switch (G) {
+    case 0:  // Low latitude spherical shell
+      theta1 = theta1_lb + (double)J * d_theta1;
+      theta2 = theta2_lb + (double)K * d_theta2;
+      z = radius * cos(theta2);
+      break;
+    case 1:  // Top cap
+      theta1 = theta1_cap_lb + (double)J * d_theta1_cap;
+      theta2 = theta2_cap_lb + (double)K * d_theta2_cap;
+      z = radius * sin(theta2) * cos(theta1);
+
+      x = x_lb + (double)J * dx;
+      y = y_lb + (double)K * dy;
+      z = z_ub;
+
+      rad_B = sqrt(x * x + y * y + z * z);
+      proj = radius / rad_B;
+      z *= proj;
+      break;
+    case 2:  // Bottom cap
+      theta1 = theta1_cap_lb + (double)J * d_theta1_cap;
+      theta2 = theta2_cap_lb + (double)K * d_theta2_cap;
+      z = -radius * sin(theta2) * cos(theta1);
+
+      x = x_ub - (double)J * dx;
+      y = y_lb + (double)K * dy;
+      z = z_lb;
+
+      rad_B = sqrt(x * x + y * y + z * z);
+      proj = radius / rad_B;
+      z *= proj;
+      break;
+  }
+
+  return z;
 }
