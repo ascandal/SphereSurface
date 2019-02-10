@@ -1,7 +1,17 @@
+#include <math.h>
+#include <fstream>
+#include <string.h>
+
 #include "Parameterization.h"
-#include "GobalMacros.h"
+#include "GlobalMacros.h"
+
+using namespace std;
 
 Parameterization::Parameterization() {}
+
+string Parameterization::GetName() {
+  return name;
+}
 
 /*
  * Print the PLOT3D header for the surface parameterization
@@ -9,10 +19,10 @@ Parameterization::Parameterization() {}
  * READ(1) NGRID
  * READ(1) (JD(IG),KD(IG),LD(IG),IG=1,NGRID)
  */
-Parameterization::PrintPlot3DHeader(FILE *outfile) {
-  fprintf(outfile, "%i\n", Gmax);
+Parameterization::PrintPlot3DHeader(ofstream& outfile) {
+  outfile << Gmax << endl;
   for (G = 0; G < Gmax; G++) {
-    fprintf(outfile, "%i %i %i\n", Jmax, Kmax, Lmax);
+    outfile << Jmax << " " << Kmax << " " << Lmax << endl;
   }
 }
 
@@ -28,7 +38,7 @@ Parameterization::PrintPlot3DHeader(FILE *outfile) {
  *   &       (((IBLANK(J,K,L),J=1,JD(IG)),K=1,KD(IG)),L=1,LD(IG))
  * ENDDO
  */
-void Parameterization::PrintPlot3D(FILE *outfile) {
+void Parameterization::PrintPlot3D(ofstream& outfile) {
 
   PrintPlot3DHeader(outfile);
 
@@ -194,11 +204,11 @@ void Parameterization::PrintPlot3D(FILE *outfile) {
         }
       }
 
-      fprintf(outfile, "%e ", x);
+      outfile << x << " ";
 
     }
     }
-    fprintf(outfile, "\n");
+    outfile << endl;
     }
 
 
@@ -320,11 +330,11 @@ void Parameterization::PrintPlot3D(FILE *outfile) {
         }
       }
 
-      fprintf(outfile, "%e ", y);
+      outfile << y << " ";
 
     }
     }
-    fprintf(outfile, "\n");
+    outfile << endl;
     }
 
 
@@ -454,11 +464,11 @@ void Parameterization::PrintPlot3D(FILE *outfile) {
         }
       }
 
-      fprintf(outfile, "%e ", z);
+      outfile << z << " ";
 
     }
     }
-    fprintf(outfile, "\n");
+    outfile << endl;
     }
 
 
@@ -622,9 +632,9 @@ TwoCaps::TwoCaps() {
  * READ(1) NGRID
  * READ(1) (JD(IG),KD(IG),LD(IG),IG=1,NGRID)
  */
-void TwoCaps::PrintPlot3DHeader(FILE *outfile) {
-  fprintf(outfile, "%i\n", Gmax);
-  fprintf(outfile, "%i %i %i\n", Jmax, Kmax, Lmax);
-  fprintf(outfile, "%i %i %i\n", Jmax_cap, Kmax_cap, Lmax);
-  fprintf(outfile, "%i %i %i\n", Jmax_cap, Kmax_cap, Lmax);
+void TwoCaps::PrintPlot3DHeader(ofstream& outfile) {
+  outfile << Gmax << endl;
+  outfile << Jmax << " " << Kmax << " " << Lmax << endl;
+  outfile << Jmax_cap << " " << Kmax_cap << " " << Lmax << endl;
+  outfile << Jmax_cap << " " << Kmax_cap << " " << Lmax << endl;
 }

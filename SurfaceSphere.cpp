@@ -12,6 +12,9 @@
  * - YIN_YANG
  * - TWO_CAPS
  *
+ * To Compile Run:
+ *  g++ -std=c++11 SurfaceSphere.cpp Parameterization.cpp -o SurfaceSphere
+ *
  * Usage:
  *  surface-sphere -d 0.002
  */
@@ -19,29 +22,15 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <math.h>
 #include <errno.h>
 #include <unistd.h>
+#include <iostream>
+#include <fstream>
+#include <string.h>
 
 #include "Parameterization.h"
 
-
-#define max(x,y)  (((x) < (y)) ? (y) : (x))
-#define min(x,y)  (((x) < (y)) ? (x) : (y))
-
-#define ALLOC_1d_array(type, array_name, jd) {                    \
-  array_name = (type *) malloc((jd) * sizeof(type));              \
-}
-
-#define ALLOC_2d_array(type, array_name, jd, kd) {                \
-  array_name = (type **) calloc((jd), sizeof(type *));            \
-  for (int ii = 0; ii < (jd); ii++) {                             \
-    (array_name[ii]) = (type *) calloc((kd), sizeof(type));       \
-  }                                                               \
-}
-
-#define PI   (3.1415926535897932384626433832795028841971693993751)
+using namespace std;
 
 // Parameterization Options
 #define RECTANGULAR        (0)
@@ -68,32 +57,32 @@ int main(int argc, char **argv)
         break;
       case '?':
         if (optopt == 'c')
-          fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+          cout << "Option -" << optopt << " requires an argument." << endl;
         else if (isprint (optopt))
-          fprintf (stderr, "Unknown option `-%c'.\n", optopt);
+          cout << "Unknown option -" << optopt << endl;
         else
-          fprintf (stderr, "Unknown option character `\\x%x'.\n", optopt);
+          cout << "Unknown option character " << optopt << endl;
         return 1;
       default:
         abort();
     }
   }
 
-  printf("Starting surface-sphere:\n");
-  printf("Parameterization : %e\n", param->name);
-  printf("Sphere radius : %e\n", radius);
+  // Initial log to console.
+  cout << ">>> Starting SurfaceSphere <<<\n";
+  cout << "Using Parameterization = " << param->GetName() << endl;
+  cout << "Sphere Radius = " << radius << endl;
 
-  //------------------------+-------------------------------------------------------------
-  // Open File to write     |
-  //------------------------+
-  FILE *outfile;
-  outfile = fopen("SphereSurf.fmt", "w");
+
+  // Open file to write.
+  ofstream outfile;
+  outfile.open("SphereSurf.fmt");
 
   param->PrintPlot3D(outfile);
 
-  fclose(outfile);
+  outfile.close();
 
-  printf("\n\n>>> Surface Mesh File Complete <<<\n\n");
+  cout << "\n>>> SurfaceSphere Mesh File Complete <<<\n";
 
   return 0;
-}  // End: main()
+}

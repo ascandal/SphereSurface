@@ -1,11 +1,15 @@
 #ifndef PARAMETERIZATION_H
 #define PARAMETERIZATION_H
 
+#include <string.h>
+using namespace std;
+
 class Parameterization {
 public:
-  Parameterization() {}
-  void PrintPlot3DHeader(FILE *outfile);
-  void PrintPlot3D(FILE *outfile);
+  Parameterization();
+  void PrintPlot3DHeader(ofstream& outfile);
+  void PrintPlot3D(ofstream& outfile);
+  string GetName();
 
 private:
   string name;
@@ -26,7 +30,7 @@ private:
   double theta1_lb, theta1_ub;
   double theta2_lb, theta2_ub;
   double d_theta1, d_theta2;
-}
+};
 
 
 class Rectangular : public Parameterization {
@@ -34,7 +38,7 @@ public:
   Rectangular();
 
 private:
-}
+};
 
 
 class Spherical : public Parameterization {
@@ -42,7 +46,7 @@ public:
   Spherical();
 
 private:
-}
+};
 
 
 class BoxProjection : public Parameterization {
@@ -50,7 +54,7 @@ public:
   BoxProjection();
 
 private:
-}
+};
 
 
 class YinYang : public Parameterization {
@@ -58,15 +62,15 @@ public:
   YinYang();
 
 private:
-}
+};
 
 
 class TwoCaps : public Parameterization {
 public:
   TwoCaps();
-  void PrintPlot3DHeader(FILE *outfile);
+  void PrintPlot3DHeader(ofstream& outfile);
 
 private:
-}
+};
 
 #endif
