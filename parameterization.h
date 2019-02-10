@@ -1,3 +1,6 @@
+#ifndef PARAMETERIZATION_H
+#define PARAMETERIZATION_H
+
 class Parameterization {
 public:
   Parameterization() {}
@@ -41,6 +44,7 @@ public:
 private:
 }
 
+
 class BoxProjection : private Parameterization {
 public:
   BoxProjection();
@@ -57,7 +61,6 @@ private:
 }
 
 
-
 class TwoCaps : private Parameterization {
 public:
   TwoCaps();
@@ -65,3 +68,5 @@ public:
 
 private:
 }
+
+#endif
