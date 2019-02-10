@@ -24,26 +24,19 @@
 #include <errno.h>
 #include <unistd.h>
 
+#include "parameterization.h"
+
 
 #define max(x,y)  (((x) < (y)) ? (y) : (x))
 #define min(x,y)  (((x) < (y)) ? (x) : (y))
 
-#define ALLOC_1d_array(type,                                      \
-                       array_name,                                \
-                       jd)                                        \
-{                                                                 \
+#define ALLOC_1d_array(type, array_name, jd) {                    \
   array_name = (type *) malloc((jd) * sizeof(type));              \
 }
 
-#define ALLOC_2d_array(type,                                      \
-                       array_name,                                \
-                       jd, kd)                                    \
-{                                                                 \
-  int ii;                                                         \
-                                                                  \
+#define ALLOC_2d_array(type, array_name, jd, kd) {                \
   array_name = (type **) calloc((jd), sizeof(type *));            \
-                                                                  \
-  for (ii = 0; ii < (jd); ii++                                    \
+  for (int ii = 0; ii < (jd); ii++) {                             \
     (array_name[ii]) = (type *) calloc((kd), sizeof(type));       \
   }                                                               \
 }
