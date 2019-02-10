@@ -1,0 +1,8 @@
+# Dependency directories
+node_modules
+
+# Compiled releases
+SurfaceSphere
+
+# Output files
+*.fmt
