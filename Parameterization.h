@@ -43,39 +43,47 @@ public:
 class Rectangular : public Parameterization {
 public:
   Rectangular();
-
-private:
+  double coordinateX(int J, int K, int L, int G);
+  double coordinateY(int J, int K, int L, int G);
+  double coordinateZ(int J, int K, int L, int G);
 };
 
 
 class Spherical : public Parameterization {
 public:
   Spherical();
-
-private:
+  double coordinateX(int J, int K, int L, int G);
+  double coordinateY(int J, int K, int L, int G);
+  double coordinateZ(int J, int K, int L, int G);
 };
 
 
 class BoxProjection : public Parameterization {
 public:
   BoxProjection();
-
-private:
+  double coordinateX(int J, int K, int L, int G);
+  double coordinateY(int J, int K, int L, int G);
+  double coordinateZ(int J, int K, int L, int G);
 };
 
 
 class YinYang : public Parameterization {
 public:
   YinYang();
-
-private:
+  double coordinateX(int J, int K, int L, int G);
+  double coordinateY(int J, int K, int L, int G);
+  double coordinateZ(int J, int K, int L, int G);
 };
 
 
 class TwoCaps : public Parameterization {
 public:
   TwoCaps();
+  double coordinateX(int J, int K, int L, int G);
+  double coordinateY(int J, int K, int L, int G);
+  double coordinateZ(int J, int K, int L, int G);
   void PrintPlot3DHeader(ofstream& outfile);
+  void GridIndexRanges(ofstream& outfile);
 
   int Jmax_cap, Kmax_cap;
   double theta1_cap_lb, theta1_cap_ub;
