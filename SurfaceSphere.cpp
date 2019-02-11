@@ -88,7 +88,7 @@ int main(int argc, char **argv)
 
   // Initial log to console.
   cout << ">>> Starting SurfaceSphere <<<\n";
-  cout << "Sphere Radius = " << radius << endl;
+  cout << "Sphere Radius = " << param->radius << endl;
   cout << "Using Parameterization = " << param->GetName() << endl;
 
 

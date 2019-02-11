@@ -7,12 +7,12 @@ using namespace std;
 class Parameterization {
 public:
   Parameterization(double radius);
-  void PrintPlot3DHeader(ofstream& outfile);
-  void PrintPlot3D(ofstream& outfile);
+  virtual void PrintPlot3DHeader(ofstream& outfile);
+  virtual void PrintPlot3D(ofstream& outfile);
   string GetName();
-  double coordinateX(int J, int K, int L, int G);
-  double coordinateY(int J, int K, int L, int G);
-  double coordinateZ(int J, int K, int L, int G);
+  virtual double coordinateX(int J, int K, int L, int G);
+  virtual double coordinateY(int J, int K, int L, int G);
+  virtual double coordinateZ(int J, int K, int L, int G);
 
   string name;
 
