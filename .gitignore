@@ -6,3 +6,4 @@ SurfaceSphere
 
 # Output files
 *.fmt
+*.xyz

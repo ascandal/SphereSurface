@@ -27,6 +27,8 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
+#include <iomanip> // setprecision
+#include <sstream> // stringstream
 
 #include "Parameterization.h"
 
@@ -93,8 +95,11 @@ int main(int argc, char **argv)
 
 
   // Open file to write.
+  stringstream ss;
+  ss << fixed << setprecision(2) << param->radius;
+  string fileName = "SphereSurf-" + param->GetName() + "-r" + ss.str() + ".xyz";
   ofstream outfile;
-  outfile.open("SphereSurf.fmt");
+  outfile.open(fileName);
 
   param->PrintPlot3D(outfile);
 
