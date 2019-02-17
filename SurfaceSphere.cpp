@@ -13,7 +13,7 @@
  * - TWO_CAPS
  *
  * To Compile Run:
- *  g++ -std=c++11 SurfaceSphere.cpp Parameterization.cpp -o SurfaceSphere
+ *  g++ -std=c++11 SurfaceSphere.cpp Parameterization.cpp Rectangular.cpp Spherical.cpp BoxProjection.cpp YinYang.cpp TwoCaps.cpp -o SurfaceSphere
  *
  * Usage:
  *  ./SurfaceSphere -r 0.002 -p 3
