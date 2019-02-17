@@ -7,6 +7,7 @@
 
 using namespace std;
 
+
 Rectangular::Rectangular(double radius) : Parameterization(radius) {
   name = "Rectangular";
 

@@ -7,6 +7,7 @@
 
 using namespace std;
 
+
 Spherical::Spherical(double radius) : Parameterization(radius) {
   name = "Spherical";
 
