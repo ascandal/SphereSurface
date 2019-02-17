@@ -99,8 +99,8 @@ Rectangular::Rectangular(double radius) : Parameterization(radius) {
   Lmax = 1;
   Gmax = 2;
 
-  x_lb = -radius + 0.00001e0;
-  x_ub =  radius - 0.00001e0;
+  x_lb = -radius;
+  x_ub =  radius;
 
   dx = (x_ub - x_lb) / (double)(Jmax - 1);
 }
