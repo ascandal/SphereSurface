@@ -61,9 +61,7 @@ public:
   double coordinateX(int J, int K, int L, int G);
   double coordinateY(int J, int K, int L, int G);
   double coordinateZ(int J, int K, int L, int G);
-
-  // support variables.
-  double rad_B, proj;
+  double projection(double x, double y, double z);
 };
 
 

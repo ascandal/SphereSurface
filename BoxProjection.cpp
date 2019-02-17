@@ -64,13 +64,7 @@ double BoxProjection::coordinateX(int J, int K, int L, int G) {
       break;
   }
 
-  rad_B = sqrt(x * x + y * y + z * z);
-
-  proj = radius / rad_B;
-
-  x *= proj;
-
-  return x;
+  return x * projection(x, y, z);
 }
 
 double BoxProjection::coordinateY(int J, int K, int L, int G) {
@@ -107,13 +101,7 @@ double BoxProjection::coordinateY(int J, int K, int L, int G) {
       break;
   }
 
-  rad_B = sqrt(x * x + y * y + z * z);
-
-  proj = radius / rad_B;
-
-  y *= proj;
-
-  return y;
+  return y * projection(x, y, z);
 }
 
 double BoxProjection::coordinateZ(int J, int K, int L, int G) {
@@ -150,11 +138,9 @@ double BoxProjection::coordinateZ(int J, int K, int L, int G) {
       break;
   }
 
-  rad_B = sqrt(x * x + y * y + z * z);
+  return z * projection(x, y, z);
+}
 
-  proj = radius / rad_B;
-
-  z *= proj;
-
-  return z;
+double BoxProjection::projection(double x, double y, double z) {
+  return radius / sqrt(x * x + y * y + z * z);
 }
