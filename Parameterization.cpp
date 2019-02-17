@@ -97,7 +97,7 @@ Rectangular::Rectangular(double radius) : Parameterization(radius) {
   Jmax = 200;
   Kmax = 100;
   Lmax = 1;
-  Gmax = 1;
+  Gmax = 2;
 
   x_lb = -radius + 0.00001e0;
   x_ub =  radius - 0.00001e0;
@@ -113,7 +113,7 @@ double Rectangular::coordinateY(int J, int K, int L, int G) {
   x = x_lb + (double)J * dx;
 
   y_lb = -sqrt(radius * radius - x * x);
-  y_ub =  sqrt(radius * radius - x * x);
+  y_ub = -y_lb;
 
   dy = (y_ub - y_lb) / (double)(Kmax - 1);
 
@@ -130,12 +130,19 @@ double Rectangular::coordinateZ(int J, int K, int L, int G) {
 
   y = y_lb + (double)K * dy;
 
-  //z_lb =  0.0e0;
-  //z_ub =  sqrt(radius * radius - x * x - y * y);
+  z_lb = -sqrt(max(0.0e0, radius * radius - x * x - y * y));
+  z_ub = -z_lb;
 
-  //dz = (z_ub - z_lb) / (double)(Lmax - 1);
+  switch (G) {
+    case 0:  // Lower z
+      z = z_lb;
+      break;
+    case 1:  // Upper z
+      z = z_ub;
+      break;
+  }
 
-  return sqrt(max(0.0e0, radius * radius - x * x - y * y));
+  return z;
 }
 
 
