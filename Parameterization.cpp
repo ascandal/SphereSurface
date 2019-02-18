@@ -43,6 +43,9 @@ void Parameterization::PrintPlot3D(ofstream& outfile) {
   PrintPlot3DHeader(outfile);
 
   for (G = 0; G < Gmax; G++) {
+
+    setGridIndexRanges(G);
+
     // All x-coordinates
     for (L = 0; L < Lmax; L++) {
     for (K = 0; K < Kmax; K++) {

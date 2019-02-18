@@ -8,7 +8,7 @@
 using namespace std;
 
 
-void TwoCaps::GridIndexRanges(ofstream& outfile) {
+void TwoCaps::setGridIndexRanges(int G) {
   // Choose index ranges for each grid.
   // Top and bottom caps
   if (G > 0) {

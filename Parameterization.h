@@ -13,6 +13,7 @@ public:
   virtual double coordinateX(int J, int K, int L, int G);
   virtual double coordinateY(int J, int K, int L, int G);
   virtual double coordinateZ(int J, int K, int L, int G);
+  virtual void setGridIndexRanges(int G){};
 
   string name;
 
@@ -87,7 +88,7 @@ public:
   double coordinateY(int J, int K, int L, int G);
   double coordinateZ(int J, int K, int L, int G);
   void PrintPlot3DHeader(ofstream& outfile);
-  void GridIndexRanges(ofstream& outfile);
+  void setGridIndexRanges(int G);
 
   // support variables.
   double rad_B, proj;
