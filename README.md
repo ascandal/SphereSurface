@@ -50,9 +50,12 @@ DO IG = 1,NGRID
 ENDDO
  ```
 
-## Installing SurfaceSphere
+## Building SurfaceSphere
 
-gcc -o surface-sphere surface-sphere.c
+`mkdir build`
+`cd build`
+`cmake ..`
+`make`
 
 ## Running SurfaceSphere
 
