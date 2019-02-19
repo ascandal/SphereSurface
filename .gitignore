@@ -1,8 +1,9 @@
 # Dependency directories
 node_modules
+build
 
 # Compiled releases
-SurfaceSphere
+surfacesphere
 
 # Output files
 *.fmt
