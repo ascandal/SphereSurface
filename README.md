@@ -1,12 +1,12 @@
-# SurfaceSphere
+# SphereSurface
 
-**SurfaceSphere** generates the structured surface mesh of a sphere in formatted PLOT3D format (file extension .xyz).
+**SphereSurface** generates the structured surface mesh of a sphere in formatted PLOT3D format (file extension .xyz).
 
 * The sphere is centered about the origin (0, 0, 0).
 * There are multiple parameterizations to choose from.
 * Some of the parameterizations have overlapping mesh parts to be used with overset grid schemes. Mesh joining routines are used as a post process to intersect the mesh parts where they overlap along a seam. In this case for a sphere, final mesh will be water-tight (i.e. have no holes). The joining methods are not included here.
 
-**SurfaceSphere** is designed to be used for high-fidelity computational solvers that need precise control over the surface mesh properties. Some such surface mesh properies include:
+**SphereSurface** is designed to be used for high-fidelity computational solvers that need precise control over the surface mesh properties. Some such surface mesh properies include:
 
 * Resolution of geometry (total number of cells).
 * Ratio of smallest to largest cells.
@@ -41,20 +41,22 @@ DO IG = 1,NGRID
 ENDDO
  ```
 
-## Building SurfaceSphere
+## Building SphereSurface
 
-Open a console terminal in the root `surfacesphere` directory, and run these commands.
+Open a console terminal in the root `spheresurface` directory, and run these commands.
 
 1. `mkdir build`
 1. `cd build`
 1. `cmake ..`
 1. `make`
 
-## Running SurfaceSphere
+## Running SphereSurface
 
-After building **SurfaceSphere** , run the executable with any desired command line options.
+After building **SphereSurface** , run the executable with any desired command line options.
 
-./surfacesphere -r double -p int
+```console
+./spheresurface -r <double> -p <int>
+```
 
 -r {double}: the radius of the sphere.
 -p {int}: the parameterization of the mesh.
@@ -65,7 +67,7 @@ After building **SurfaceSphere** , run the executable with any desired command l
       (4) TWO_CAPS
 
 
-## SurfaceSphere Parameterizations
+## SphereSurface Parameterizations
 
 At the moment 5 parameterizations are provided.
 

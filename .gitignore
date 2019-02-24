@@ -3,7 +3,7 @@ node_modules
 build
 
 # Compiled releases
-surfacesphere
+spheresurface
 
 # Output files
 *.fmt

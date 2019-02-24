@@ -1,5 +1,5 @@
 /**
- * \file SurfaceSphere.cpp
+ * \file SphereSurface.cpp
  * \author Angelo L. Scandaliato
  * \brief Outputs the surface mesh of a sphere in PLOT3D format (file extension .xyz).
  * The sphere is centered about the origin (0, 0, 0).
@@ -12,11 +12,7 @@
  * - YIN_YANG
  * - TWO_CAPS
  *
- * To Compile Run:
- *  g++ -std=c++11 SurfaceSphere.cpp Parameterization.cpp Rectangular.cpp Spherical.cpp BoxProjection.cpp YinYang.cpp TwoCaps.cpp -o SurfaceSphere
- *
- * Usage:
- *  ./SurfaceSphere -r 0.002 -p 3
+ * \example ./spheresurface -r 0.002 -p 3
  */
 
 #include <ctype.h>
@@ -89,7 +85,7 @@ int main(int argc, char **argv)
   }
 
   // Initial log to console.
-  cout << ">>> Starting SurfaceSphere <<<\n";
+  cout << ">>> Starting SphereSurface <<<\n";
   cout << "Sphere Radius = " << param->radius << endl;
   cout << "Using Parameterization = " << param->GetName() << endl;
 
@@ -105,7 +101,7 @@ int main(int argc, char **argv)
 
   outfile.close();
 
-  cout << "\n>>> SurfaceSphere Mesh File Complete <<<\n";
+  cout << "\n>>> SphereSurface Mesh File Complete <<<\n";
 
   return 0;
 }
