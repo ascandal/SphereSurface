@@ -15,11 +15,7 @@
 
 ## PLOT3D Format
 
-The PLOT3D formatted file (extension .xyz) is described by its read method.
-
-A link describing the PLOT3D format can be found (here)[https://www.grc.nasa.gov/www/wind/valid/plot3d.html]
-
-Written in **Fortran 77** for **Structured, 3D, Whole, formatted, Multi-Block Grid**
+The PLOT3D formatted file (extension .xyz) is described by its read method written in **Fortran 77** for **Structured, 3D, Whole, formatted, Multi-Block Grid**
 
 ```fortran
 ! NGRID {int} : the number of grids
@@ -41,6 +37,8 @@ DO IG = 1,NGRID
 ENDDO
  ```
 
+A link describing the PLOT3D format can be found (here)[https://www.grc.nasa.gov/www/wind/valid/plot3d.html]
+
 ## Building SphereSurface
 
 Open a console terminal in the root `spheresurface` directory, and run these commands.
@@ -58,13 +56,27 @@ After building **SphereSurface** , run the executable with any desired command l
 ./spheresurface -r <double> -p <int>
 ```
 
--r {double}: the radius of the sphere.
--p {int}: the parameterization of the mesh.
-      (0) RECTANGULAR
-      (1) SPHERICAL
-      (2) BOX_PROJECTION
-      (3) YIN_YANG
-      (4) TWO_CAPS
+<table>
+  <tr>
+    <th>Option</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>-r</td>
+    <td>double</td>
+    <td>
+      The radius of the sphere.<br>Default: 0.5
+    </td>
+  </tr>
+  <tr>
+    <td>-p</td>
+    <td>int</td>
+    <td>
+      The parameterization of the mesh.<br>(0) RECTANGULAR<br>(1) SPHERICAL<br>(2) BOX_PROJECTION<br>(3) YIN_YANG<br>(4) TWO_CAPS<br>Default: 1
+    </td>
+  </tr>
+</table>
 
 
 ## SphereSurface Parameterizations
