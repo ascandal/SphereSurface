@@ -37,7 +37,7 @@ DO IG = 1,NGRID
 ENDDO
  ```
 
-A link describing the PLOT3D format can be found (here)[https://www.grc.nasa.gov/www/wind/valid/plot3d.html]
+A link describing the PLOT3D format can be found [here](https://www.grc.nasa.gov/www/wind/valid/plot3d.html)
 
 ## Building SphereSurface
 
