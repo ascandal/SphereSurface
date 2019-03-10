@@ -78,6 +78,14 @@ After building **SphereSurface** , run the executable with any desired command l
   </tr>
 </table>
 
+## Analyzing and Visualizing the Output
+The executable will generate an ASCII file containing the sphere's surface mesh in PLOT3D format with file extension `.xyz`. The filename will be of the form,
+
+`SphereSurf-<parameterization>-r<radius>.xyz`
+
+where `<parameterization>` is the name of the parameterization used, and `<radius>` is the radius.
+
+There are many visualization software packages available with the capability to load the formatted multi-block PLOT3D file. Some include **TecPlot**, **VisIt**, and **ParaView**.
 
 ## SphereSurface Parameterizations
 
@@ -85,9 +93,9 @@ At the moment 5 parameterizations are provided.
 
 * [Rectangular](#rectangular)
 * [Spherical](#spherical)
-* [Box Projection](#boxprojection)
-* [Yin Yang](#yinyang)
-* [Two Caps](#twocaps)
+* [Box Projection](#box-projection)
+* [Yin Yang](#yin-yang)
+* [Two Caps](#two-caps)
 
 ### Rectangular
 

@@ -1,6 +1,7 @@
 /**
  * \file SphereSurface.cpp
  * \author Angelo L. Scandaliato
+ * \license MIT
  * \brief Outputs the surface mesh of a sphere in PLOT3D format (file extension .xyz).
  * The sphere is centered about the origin (0, 0, 0).
  * There are multiple parameterizations to choose from. Some with overlapping
